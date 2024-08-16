@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="text-xl font-semibold">Company Logo</div>
             <p className="text-sm text-gray-400">
-              Your tagline or description here.
+             tag
             </p>
             <div className="text-sm text-gray-400">@kemenkop</div>
           </div>
@@ -49,22 +49,22 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <Link className="hover:text-gray-300" href="#0">
-                  About Us
+                  Home
                 </Link>
               </li>
               <li>
                 <Link className="hover:text-gray-300" href="#0">
-                  Careers
+                 About
                 </Link>
               </li>
               <li>
                 <Link className="hover:text-gray-300" href="#0">
-                  Press
+                  Menu 3
                 </Link>
               </li>
               <li>
                 <Link className="hover:text-gray-300" href="#0">
-                  Contact
+                  Menu 4
                 </Link>
               </li>
             </ul>
@@ -72,21 +72,21 @@ export default function Footer() {
 
           {/* 4th block */}
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Resources</h3>
+            <h3 className="text-lg font-medium">biasa</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <Link className="hover:text-gray-300" href="#0">
-                  Community
+                 biasa 1
                 </Link>
               </li>
               <li>
                 <Link className="hover:text-gray-300" href="#0">
-                  Terms of Service
+                  biasa 2
                 </Link>
               </li>
               <li>
                 <Link className="hover:text-gray-300" href="#0">
-                  Privacy Policy
+                  biasa 3
                 </Link>
               </li>
             </ul>

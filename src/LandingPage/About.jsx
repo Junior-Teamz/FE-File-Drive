@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Icon1 from "../assets/Images/icon1.png"
 
-export default function About() {
+export default function About(props) {
+ const id = props.id;
+
   useEffect(() => {
     AOS.init({ duration: 1000, once: true, disable: "phone" });
   }, []);
 
   return (
-    <section className="relative my-28 bg-gray-50 py-16">
+    <section id={id} className="relative my-28 py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:flex lg:items-center">
         <div className="lg:w-1/2">
           <div className="mb-8 lg:mb-0" data-aos="fade-right">
@@ -31,7 +34,7 @@ export default function About() {
           data-aos="fade-left"
         >
           <img
-            src="https://via.placeholder.com/600x400"
+            src={Icon1}
             alt="About Us"
             className="h-full w-full rounded-lg object-cover shadow-lg"
           />

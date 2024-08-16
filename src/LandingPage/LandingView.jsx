@@ -7,7 +7,7 @@ export default function LandingView() {
   return (
    <>
    <Navbar/>
-   <About/>
+   <About id="About"/>
    <Footer/>
    </>
   )
