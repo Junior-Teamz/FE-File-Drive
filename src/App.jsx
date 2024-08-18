@@ -1,5 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import RouteIndex from "./Route";
+import RouteIndex from "./Routes";
 
 export default function App() {
   return (
