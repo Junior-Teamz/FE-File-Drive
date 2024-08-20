@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
-import { Box, Button, Typography, IconButton } from '@mui/material';
-import { UploadFile, ViewList, ViewModule } from '@mui/icons-material';
-import FileListView from '../Components/FileListView';
-import FileGridView from '../Components/FileGridView';
-import UploadDialog from '../Components/UploadDialog';
+import React, { useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import { ViewList, ViewModule } from "@mui/icons-material";
+import FileListView from "../Components/FileListView";
+import FileGridView from "../Components/FileGridView";
+import UploadDialog from "../Components/UploadDialog";
+import { CloudUpload } from "lucide-react";
 
 const files = [
-  { name: 'Docs', size: '2.4 GB', modified: '18 Aug 2024 5:38 PM', shared: 4 },
-  { name: 'Foods', size: '400 MB', modified: '13 Aug 2024 12:38 PM', shared: 3 },
-  { name: 'Projects', size: '1.2 GB', modified: '17 Aug 2024 4:38 PM', shared: 4 },
+  { name: "Docs", size: "2.4 GB",
+    type:"Folder", modified: "18 Aug 2024 5:38 PM", shared: 4 },
+  {
+    name: "Foods",
+    size: "400 MB",
+    type:"Folder",
+    modified: "13 Aug 2024 12:38 PM",
+    shared: 3,
+  },
+  {
+    name: "Projects",
+    size: "1.2 GB",
+    type:"Folder",
+    modified: "17 Aug 2024 4:38 PM",
+    shared: 4,
+  },
   // more files...
 ];
 
@@ -26,17 +40,50 @@ export default function UserDashboard() {
 
   return (
     <Box p={4} bgcolor="#f9f9f9">
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" sx={{ fontSize: { xs: '24px', sm: '32px', md: '40px' } }}>File Manager</Typography>
-        <Button variant="contained" startIcon={<UploadFile />} onClick={handleUploadClick}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={3}
+      >
+        <Typography
+          variant="h4"
+          sx={{ fontSize: { xs: "24px", sm: "32px", md: "40px" } }}
+        >
+          Sharing File
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<CloudUpload />}
+          onClick={handleUploadClick}
+        >
           Upload
         </Button>
       </Box>
 
-      <Box mb={3} display="flex" justifyContent="space-between" alignItems="center">
-        <IconButton onClick={() => setIsGridView(!isGridView)}>
-          {isGridView ? <ViewList /> : <ViewModule />}
-        </IconButton>
+      <Box
+        mb={3}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <button
+          className="border py-1 px-1"
+          onClick={() => setIsGridView(!isGridView)}
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <ViewModule
+            className={`text-gray-600 rounded-md ${
+              isGridView ? "bg-gray-200" : "hover:bg-gray-200"
+            }`}
+          />
+          <ViewList
+            className={`text-gray-600 rounded-md ${
+              !isGridView ? "bg-gray-200" : "hover:bg-gray-200"
+            }`}
+            style={{ marginLeft: 8 }} 
+          />
+        </button>
       </Box>
 
       {isGridView ? (
@@ -45,7 +92,10 @@ export default function UserDashboard() {
         <FileListView files={files} />
       )}
 
-      <UploadDialog open={isUploadDialogOpen} onClose={handleCloseUploadDialog} />
+      <UploadDialog
+        open={isUploadDialogOpen}
+        onClose={handleCloseUploadDialog}
+      />
     </Box>
   );
 }

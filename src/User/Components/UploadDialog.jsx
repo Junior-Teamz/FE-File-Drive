@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Box, Button, Dialog, DialogContent, Typography } from "@mui/material";
 import { UploadFile } from "@mui/icons-material";
 import SearchFile from "../../assets/Images/file.png";
+import { UploadCloud } from "lucide-react";
 
 export default function UploadDialog({ open, onClose }) {
   const fileInputRef = useRef(null);
@@ -19,7 +20,7 @@ export default function UploadDialog({ open, onClose }) {
         <DialogContent>
           <Box textAlign="center" p={3}>
             <Typography variant="h6" mb={2}>
-              Upload Files
+             Upload Files
             </Typography>
             <Box
               border="2px dashed #ccc"
@@ -47,7 +48,7 @@ export default function UploadDialog({ open, onClose }) {
                 style={{ display: "none" }}
               />
             </Box>
-            <Button variant="contained" startIcon={<UploadFile />}>
+            <Button variant="contained" startIcon={<UploadCloud />}>
               Upload
             </Button>
           </Box>

@@ -1,56 +1,106 @@
-import React, { useState } from 'react';
-import { Box,Button, Grid, Typography, Checkbox, AvatarGroup, Avatar, IconButton, Dialog, DialogContent } from '@mui/material';
-import { Folder, Star, StarBorder, MoreVert } from '@mui/icons-material';
+import React, { useState } from "react";
+import {
+  Grid,
+  Box,
+  Typography,
+  IconButton,
+  AvatarGroup,
+  Avatar,
+  Dialog,
+  DialogContent,
+  Menu,
+  MenuItem,
+  Button,
+} from "@mui/material";
+import {
+  Star,
+  StarBorder,
+  Folder,
+  MoreVert,
+  Share as ShareIcon,
+  Edit as EditIcon,
+  Link as LinkIcon,
+  Delete as DeleteIcon,
+} from "@mui/icons-material";
 
 export default function FileGridView({ files }) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [clickedStar, setClickedStar] = useState({});
 
+  // Handle file click
   const handleFileClick = (file) => {
     setSelectedFile(file);
+    setAnchorEl(null); // Close menu if open
   };
 
+  // Close the dialog
   const handleCloseDialog = () => {
     setSelectedFile(null);
   };
 
+  // Handle menu click
+  const handleMenuClick = (event, file) => {
+    event.stopPropagation(); // Prevent event from bubbling up to file click
+    setAnchorEl(event.currentTarget);
+    setSelectedFile(file); // Set the file for which the menu is opened
+  };
+
+  // Close the menu
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  // Handle star click
+  const handleStarClick = (event, index) => {
+    event.stopPropagation(); // Prevent event from bubbling up to file click
+    setClickedStar((prevStars) => ({
+      ...prevStars,
+      [index]: !prevStars[index],
+    }));
+  };
+
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {files.map((file, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={4} key={index}>
+          <Grid item xs={12} sm={6} md={4} key={file.name}>
             <Box
               display="flex"
               flexDirection="column"
-              alignItems="flex-start"
+              alignItems="center"
               p={2}
-              bgcolor="white"
-              borderRadius="8px"
+              boxShadow={3}
+              borderRadius={2}
               onClick={() => handleFileClick(file)}
-              sx={{
-                cursor: 'pointer',
-                '@media (min-width: 600px)': {
-                  flexDirection: 'row',
-                },
-              }}
+              sx={{ cursor: "pointer" }} // Add cursor pointer for better UX
             >
-              <Box display="flex" alignItems="center" mb={1}>
-                <Checkbox />
-                <Folder  style={{ marginRight: '16px', color: '#FFC107' }} />
-              </Box>
-              <Box flexGrow={1}>
-                <Typography variant="body1">{file.name}</Typography>
-                <Typography variant="body2">{file.size}</Typography>
-                <Typography variant="body2">folder</Typography>
-                <Typography variant="body2">{file.modified}</Typography>
-              </Box>
-              <Box display="flex" alignItems="center" justifyContent="flex-end" mt={1}>
+              <Folder style={{ fontSize: "48px", color: "#FFC107" }} />
+              <Typography variant="h6" align="center" noWrap>
+                {file.name}
+              </Typography>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                width="100%"
+                mt={1}
+              >
                 <AvatarGroup max={4}>
-                  {Array.from({ length: file.shared }, (_, idx) => (
-                    <Avatar key={idx} alt={`User ${idx + 1}`} src={`https://randomuser.me/api/portraits/thumb/men/${idx + 1}.jpg`} />
-                  ))}
+                  {Array(4)
+                    .fill()
+                    .map((_, idx) => (
+                      <Avatar
+                        key={idx}
+                        src={`https://randomuser.me/api/portraits/thumb/men/${idx + 1}.jpg`}
+                      />
+                    ))}
                 </AvatarGroup>
-                <IconButton>{index % 2 === 0 ? <Star /> : <StarBorder />}</IconButton>
-                <IconButton>
+                <IconButton onClick={(event) => handleStarClick(event, index)}>
+                  {clickedStar[index] ? <Star /> : <StarBorder />}
+                </IconButton>
+                <IconButton
+                  onClick={(event) => handleMenuClick(event, file)}
+                >
                   <MoreVert />
                 </IconButton>
               </Box>
@@ -60,17 +110,27 @@ export default function FileGridView({ files }) {
       </Grid>
 
       {selectedFile && (
-        <Dialog open={Boolean(selectedFile)} onClose={handleCloseDialog} fullWidth maxWidth="sm">
+        <Dialog
+          open={Boolean(selectedFile)}
+          onClose={handleCloseDialog}
+          fullWidth
+          maxWidth="sm"
+        >
           <DialogContent>
             <Box p={3} bgcolor="#f9f9f9">
-              <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mb={3}
+              >
                 <Typography variant="h6">Info</Typography>
                 <IconButton>
                   <StarBorder />
                 </IconButton>
               </Box>
               <Box mb={3}>
-                <Folder style={{ fontSize: '48px', color: '#FFC107' }} />
+                <Folder style={{ fontSize: "48px", color: "#FFC107" }} />
                 <Typography variant="h5">{selectedFile.name}</Typography>
               </Box>
               <Box mb={3}>
@@ -86,15 +146,21 @@ export default function FileGridView({ files }) {
                     <Typography variant="body2">Design</Typography>
                   </Box>
                   <Box p={1} m={0.5}>
-                    <Typography variant="body2" color="textSecondary">#Add a tags</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      #Add a tag
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
               <Box>
                 <Typography variant="subtitle1">Properties</Typography>
                 <Box>
-                  <Typography variant="body2">Size: {selectedFile.size}</Typography>
-                  <Typography variant="body2">Modified: {selectedFile.modified}</Typography>
+                  <Typography variant="body2">
+                    Size: {selectedFile.size}
+                  </Typography>
+                  <Typography variant="body2">
+                    Modified: {selectedFile.modified}
+                  </Typography>
                   <Typography variant="body2">Type: Folder</Typography>
                 </Box>
               </Box>
@@ -105,6 +171,52 @@ export default function FileGridView({ files }) {
           </DialogContent>
         </Dialog>
       )}
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <MenuItem
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent event from bubbling
+            handleMenuClose();
+          }}
+        >
+          <LinkIcon sx={{ marginRight: 1 }} />
+          Copy Link
+        </MenuItem>
+        <MenuItem
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent event from bubbling
+            handleMenuClose();
+          }}
+        >
+          <ShareIcon sx={{ marginRight: 1 }} />
+          Share
+        </MenuItem>
+        <MenuItem
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent event from bubbling
+            handleMenuClose();
+          }}
+        >
+          <EditIcon sx={{ marginRight: 1 }} />
+          Edit
+        </MenuItem>
+        <MenuItem
+          onClick={(event) => {
+            event.stopPropagation(); // Prevent event from bubbling
+            handleMenuClose();
+          }}
+          sx={{ color: "red" }}
+        >
+          <DeleteIcon sx={{ marginRight: 1 }} />
+          Delete
+        </MenuItem>
+      </Menu>
     </>
   );
 }
