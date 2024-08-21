@@ -1,80 +1,47 @@
-import React from 'react';
-import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, Divider } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import {
+  Home as HomeIcon,
+  ShoppingCart as ShoppingCartIcon,
+  Analytics as AnalyticsIcon,
+  AccountBalance as BankingIcon,
+  EventNote as BookingIcon,
+  Folder as FileIcon,
+  Person as UserIcon,
+  Category as ProductIcon,
+  Receipt as OrderIcon,
+  Description as InvoiceIcon,
+  Assignment as BlogIcon,
+  Work as JobIcon,
+  Directions as TourIcon,
+} from '@mui/icons-material';
 
-const drawerWidth = 240;
+export default function Sidebar  () {
+  const menuItems = [
+    { text: 'App', icon: <HomeIcon /> },
+    { text: 'E-Commerce', icon: <ShoppingCartIcon /> },
+    { text: 'Analytics', icon: <AnalyticsIcon /> },
+    { text: 'Banking', icon: <BankingIcon /> },
+    { text: 'Booking', icon: <BookingIcon /> },
+    { text: 'File', icon: <FileIcon /> },
+    { text: 'User', icon: <UserIcon /> },
+    { text: 'Product', icon: <ProductIcon /> },
+    { text: 'Order', icon: <OrderIcon /> },
+    { text: 'Invoice', icon: <InvoiceIcon /> },
+    { text: 'Blog', icon: <BlogIcon /> },
+    { text: 'Job', icon: <JobIcon /> },
+    { text: 'Tour', icon: <TourIcon /> },
+  ];
 
-export default function Sidebar() {
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-      }}
-    >
-      <Box sx={{ overflow: 'auto' }}>
-        <List>
-          {/* Overview Section */}
-          <Typography variant="h6" sx={{ px: 2, py: 2 }}>
-            OVERVIEW
-          </Typography>
-          <ListItem button>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+    <div className="w-64 h-full bg-white shadow-md">
+      <List>
+        {menuItems.map((item, index) => (
+          <ListItem button key={index}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} />
           </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="E-Commerce" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <BarChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Analytics" />
-          </ListItem>
-
-          <Divider />
-
-          {/* Management Section */}
-          <Typography variant="h6" sx={{ px: 2, py: 2 }}>
-            MANAGEMENT
-          </Typography>
-          <ListItem button>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="User" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Product" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Order" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItem>
-        </List>
-      </Box>
-    </Drawer>
+        ))}
+      </List>
+    </div>
   );
-}
+};
