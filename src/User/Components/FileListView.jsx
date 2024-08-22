@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  ListItemIcon,
   IconButton,
   AvatarGroup,
   Avatar,
@@ -18,16 +17,18 @@ import {
   TableCell,
   TableBody,
   useMediaQuery,
+  Box,
+  Stack,
 } from "@mui/material";
 import {
   Star,
   StarBorder,
   Folder,
   MoreVert,
-  Share as ShareIcon,
-  Edit as EditIcon,
   Link as LinkIcon,
   Delete as DeleteIcon,
+  Share as ShareIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
 
@@ -47,10 +48,9 @@ export default function FileListView({ files }) {
     setSelectedFile(null);
   };
 
-  const handleMenuClick = (event, file) => {
+  const handleMenuClick = (event) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
-    setSelectedFile(file);
   };
 
   const handleMenuClose = () => {
@@ -98,8 +98,8 @@ export default function FileListView({ files }) {
   const isSelected = (fileName) => selectedFiles.indexOf(fileName) !== -1;
 
   return (
-    <>
-      <TableContainer>
+    <Box p={isMobile ? 2 : 4}>
+      <TableContainer sx={{ mt: 3 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -131,6 +131,7 @@ export default function FileListView({ files }) {
                 <TableRow
                   key={index}
                   onClick={() => handleFileClick(file)}
+                  sx={{ cursor: "pointer" }}
                   selected={isItemSelected}
                   hover
                 >
@@ -143,8 +144,13 @@ export default function FileListView({ files }) {
                     />
                   </TableCell>
                   <TableCell>
-                    <Folder className="mb-1 mr-1" style={{ color: "#FFC107" }} />
-                    {file.name}
+                    <Stack direction="row" alignItems="center">
+                      <Folder
+                        className="mb-1 mr-1"
+                        style={{ color: "#FFC107" }}
+                      />
+                      {file.name}
+                    </Stack>
                   </TableCell>
                   <TableCell>{file.size}</TableCell>
                   <TableCell>{file.type}</TableCell>
@@ -186,7 +192,7 @@ export default function FileListView({ files }) {
         </Table>
       </TableContainer>
 
-      {selectedFile && (
+      {selectedFile && !anchorEl && (
         <Dialog
           open={Boolean(selectedFile)}
           onClose={handleCloseDialog}
@@ -241,6 +247,6 @@ export default function FileListView({ files }) {
           Delete
         </MenuItem>
       </Menu>
-    </>
+    </Box>
   );
 }

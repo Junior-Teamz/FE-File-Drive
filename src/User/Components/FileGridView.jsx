@@ -28,32 +28,26 @@ export default function FileGridView({ files }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [clickedStar, setClickedStar] = useState({});
 
-  // Handle file click
   const handleFileClick = (file) => {
-    setSelectedFile(file);
-    setAnchorEl(null); // Close menu if open
+    setSelectedFile(file); //Hanya atur file yang dipilih saat mengklik baris file
   };
 
-  // Close the dialog
   const handleCloseDialog = () => {
-    setSelectedFile(null);
+    setSelectedFile(null); //Tutup dialog file
   };
 
-  // Handle menu click
-  const handleMenuClick = (event, file) => {
-    event.stopPropagation(); // Prevent event from bubbling up to file click
-    setAnchorEl(event.currentTarget);
-    setSelectedFile(file); // Set the file for which the menu is opened
+  const handleMenuClick = (event) => {
+    event.stopPropagation(); //Cegah modal terbuka saat menu diklik
+    setAnchorEl(event.currentTarget); //Mengatur elemen jangkar untuk menu
   };
 
-  // Close the menu
   const handleMenuClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(null); //Tutup menu tanpa memengaruhi file yang dipilih
   };
 
   // Handle star click
   const handleStarClick = (event, index) => {
-    event.stopPropagation(); // Prevent event from bubbling up to file click
+    event.stopPropagation(); //Cegah event muncul saat mengklik file
     setClickedStar((prevStars) => ({
       ...prevStars,
       [index]: !prevStars[index],
@@ -68,42 +62,68 @@ export default function FileGridView({ files }) {
             <Box
               display="flex"
               flexDirection="column"
-              alignItems="center"
               p={2}
-              boxShadow={3}
+              boxShadow={1}
               borderRadius={2}
               onClick={() => handleFileClick(file)}
-              sx={{ cursor: "pointer" }} // Add cursor pointer for better UX
+              sx={{
+                cursor: "pointer",
+                bgcolor: "#fff",
+                border: "1px solid #e0e0e0",
+                position: "relative",
+                '&:hover': {
+                  boxShadow: 3,
+                },
+              }}
             >
               <Folder style={{ fontSize: "48px", color: "#FFC107" }} />
-              <Typography variant="h6" align="center" noWrap>
+              <Typography variant="h6" mt={2} noWrap>
                 {file.name}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" mt={1}>
+                {file.size} ・ {file.filesCount} files
               </Typography>
               <Box
                 display="flex"
                 justifyContent="space-between"
-                width="100%"
-                mt={1}
+                alignItems="center"
+                mt={2}
               >
-                <AvatarGroup max={4}>
+                <AvatarGroup max={3}>
                   {Array(4)
                     .fill()
                     .map((_, idx) => (
                       <Avatar
                         key={idx}
-                        src={`https://randomuser.me/api/portraits/thumb/men/${idx + 1}.jpg`}
+                        src={`https://randomuser.me/api/portraits/thumb/men/${
+                          idx + 1
+                        }.jpg`}
+                        sx={{ width: 24, height: 24 }}
                       />
                     ))}
                 </AvatarGroup>
-                <IconButton onClick={(event) => handleStarClick(event, index)}>
-                  {clickedStar[index] ? <Star /> : <StarBorder />}
-                </IconButton>
                 <IconButton
-                  onClick={(event) => handleMenuClick(event, file)}
+                  onClick={(event) => handleStarClick(event, index)}
+                  sx={{ padding: "6px" }}
                 >
-                  <MoreVert />
+                  {clickedStar[index] ? (
+                    <Star sx={{ fontSize: "20px", color: "#FFC107" }} />
+                  ) : (
+                    <StarBorder sx={{ fontSize: "20px" }} />
+                  )}
                 </IconButton>
               </Box>
+              <IconButton
+                onClick={(event) => handleMenuClick(event)}
+                sx={{
+                  position: "absolute",
+                  top: "8px",
+                  right: "8px",
+                  padding: "6px",
+                }}
+              >
+                <MoreVert sx={{ fontSize: "20px" }} />
+              </IconButton>
             </Box>
           </Grid>
         ))}

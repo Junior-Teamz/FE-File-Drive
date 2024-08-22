@@ -34,7 +34,7 @@ export default function About(props) {
           data-aos="fade-left"
         >
           <img
-            src={Icon1}
+            src="https://placehold.co/600x400"
             alt="About Us"
             className="h-full w-full rounded-lg object-cover shadow-lg"
           />
