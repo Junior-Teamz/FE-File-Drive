@@ -5,21 +5,27 @@ import FileListView from "../Components/FileListView";
 import FileGridView from "../Components/FileGridView";
 import UploadDialog from "../Components/UploadDialog";
 import { CloudUpload } from "lucide-react";
+import Layout from "../Components/Layout";
 
 const files = [
-  { name: "Docs", size: "2.4 GB",
-    type:"Folder", modified: "18 Aug 2024 5:38 PM", shared: 4 },
+  {
+    name: "Docs",
+    size: "2.4 GB",
+    type: "Folder",
+    modified: "18 Aug 2024 5:38 PM",
+    shared: 4,
+  },
   {
     name: "Foods",
     size: "400 MB",
-    type:"Folder",
+    type: "Folder",
     modified: "13 Aug 2024 12:38 PM",
     shared: 3,
   },
   {
     name: "Projects",
     size: "1.2 GB",
-    type:"Folder",
+    type: "Folder",
     modified: "17 Aug 2024 4:38 PM",
     shared: 4,
   },
@@ -39,7 +45,8 @@ export default function UserDashboard() {
   };
 
   return (
-    <Box p={4} bgcolor="#f9f9f9">
+    <>
+    <Layout>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -56,6 +63,7 @@ export default function UserDashboard() {
           variant="contained"
           startIcon={<CloudUpload />}
           onClick={handleUploadClick}
+          className=" bg-gradient-to-r from-green-700 to-green-500"
         >
           Upload
         </Button>
@@ -68,9 +76,8 @@ export default function UserDashboard() {
         alignItems="center"
       >
         <button
-          className="border py-1 px-1"
+          className="border py-1 px-1 flex items-center"
           onClick={() => setIsGridView(!isGridView)}
-          style={{ display: "flex", alignItems: "center" }}
         >
           <ViewModule
             className={`text-gray-600 rounded-md ${
@@ -81,7 +88,7 @@ export default function UserDashboard() {
             className={`text-gray-600 rounded-md ${
               !isGridView ? "bg-gray-200" : "hover:bg-gray-200"
             }`}
-            style={{ marginLeft: 8 }} 
+            style={{ marginLeft: 8 }}
           />
         </button>
       </Box>
@@ -96,6 +103,7 @@ export default function UserDashboard() {
         open={isUploadDialogOpen}
         onClose={handleCloseUploadDialog}
       />
-    </Box>
+    </Layout>
+    </>
   );
 }
